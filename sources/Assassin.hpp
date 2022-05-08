@@ -8,10 +8,10 @@ namespace coup{
 
         public:
 
-        void coup(Player&);
+        virtual void coup(Player&);
 
         Assassin (Game&, const string&);
 
-        const string role() const{ return "Assassin";}
+        string role() const{ return "Assassin";}
     };
 }

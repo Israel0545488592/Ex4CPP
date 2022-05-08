@@ -12,6 +12,6 @@ namespace coup{
 
     void block (Player&);   // prevent theft
 
-    const string role() const{ return "Contessa";}
+    string role() const{ return "Contessa";}
     };
 }

@@ -1,3 +1,4 @@
+#pragma once
 #include "Game.hpp"
 
 using namespace std;
@@ -32,8 +33,8 @@ namespace coup{
             //getters
             const string& getName();
             unsigned int& getCoins();
-            Player& getVictim() const;
-            const string coins() const;                // how many coins I have
-            virtual const string role() const = 0;     // what is my role
+            Player& getVictim();
+            const unsigned int coins() const;          // how many coins I have
+            virtual string role() const = 0;           // what is my role
     };
 }

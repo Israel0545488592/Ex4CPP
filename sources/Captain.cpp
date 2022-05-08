@@ -8,19 +8,31 @@ namespace coup{
     
     void Captain::steal(Player& victim){
 
+        if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
+
         game.log(name, Event::steal);
 
-        victim.getCoins() -=2;
+        if (victim.getCoins() < 2){
+            victim.getCoins() = 0;
+        }else{
+            victim.getCoins() -= 2;
+        }
         _coins +=2;
 
         last_victim = &victim;
     }
 
     void Captain::block (Player& perpetrator){
+
+        if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
         
         game.log(perpetrator.getName(), Event::block);
 
-        perpetrator.getCoins() -= 2;
+        if(perpetrator.getCoins() < 2){
+            perpetrator.getCoins() = 0;
+        }else{
+            perpetrator.getCoins() -= 2;
+        }
         perpetrator.getVictim().getCoins() +=2;
     }
 }

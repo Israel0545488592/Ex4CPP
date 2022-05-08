@@ -6,6 +6,11 @@ using namespace std;
 
 namespace coup{
 
+    Game::Game(){
+
+        current_player = 0;
+    }
+
     void Game::inrolle(const string& name){ 
         
         participants.push_back(name);
@@ -18,11 +23,30 @@ namespace coup{
 
         check();                                // ligallity
 
-        current_player++;                       // turn track
+
+        // turn track
+        current_player++;
         current_player %= participants.size();
+
+        while (! active[current_player]){
+            
+            current_player++;
+            current_player %= participants.size();
+        }
     }
 
-    vector <string> Game::players () const{ return participants; }
+    vector <string> Game::players () const{ 
+        
+        vector <string> ans;
+
+        for (unsigned long i = 0; i < participants.size(); i++){
+
+            if (active[i]){
+                ans.push_back(participants[i]);
+            }
+        }
+        return ans;
+     }
 
     const string& Game::turn() const{
 
@@ -33,16 +57,31 @@ namespace coup{
 
     const string& Game::winner() const{
 
-        if (participants.size() > 1){ throw runtime_error("the game isnt over");}
+        bool game_over = true;
+        unsigned long winner = 0;
 
-        return participants[0];
+        for (unsigned long i = 0; i < participants.size(); i++){
+
+            if (active[i]){
+                if (game_over){
+
+                    winner = i;
+                    game_over = false;
+
+                }else{
+                    
+                    throw runtime_error("game is not over");
+                }
+            }
+        }
+        return participants[winner];
     }
 
     void Game::depose(const string& victim){
 
         for (unsigned long i = 0; i < participants.size(); i++){
             
-            if (participants[i] == victim){
+            if (participants[i] == victim){                
                 active[i] = false;
                 return;
             }
@@ -63,14 +102,13 @@ namespace coup{
     }
 
     /*
-        Making sure no illigal move has been executed, this method
-        is a bit complicated since it implements all the rules.
+        Making sure no illigal move has been executed.
 
         for each event the code scans the history of the game
         ONE round back to see if it makes sense.
 
         the method only verefy validty. the actuall changes
-        are done by the players cause they have the  oversight
+        are done by the players cause they have the oversight
     */
     void Game::check() const{
 
@@ -114,7 +152,7 @@ namespace coup{
             
              for (unsigned long i = 1; i < participants.size() -1; i++){
 
-                if (events[last_ind -i].second == Event::overthrow){
+                if (events[last_ind -i].second == Event::kill){
                     if (events[last_ind -i].first == suspect){
                         break;
                     }

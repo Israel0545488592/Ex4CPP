@@ -4,16 +4,31 @@ using namespace std;
 
 namespace coup{
 
-    Assassin::Assassin(Game& game, const string& name) :Player(game, name){}
+    Assassin::Assassin(Game& game, const string& name) : Player(game, name){}
 
     void Assassin::coup(Player& victim){
 
-        if (this -> _coins < 3){ throw runtime_error("not enough capital");}
+        if (_coins < 3){ throw runtime_error("not enough capital");}
 
-        game.log(name, Event::overthrow);
+        if (_coins > 7){
 
-        last_victim = &victim;
+            game.log(name, Event::kill);
 
-        _coins -= 3;
+            game.depose(victim.getName());
+
+            last_victim = &victim;
+
+            _coins -= 7;
+
+        }else{
+
+            game.log(name, Event::kill);
+
+            game.depose(victim.getName());
+
+            last_victim = &victim;
+
+            _coins -= 3;
+        }
     }
 }

@@ -1,4 +1,3 @@
-#pragma once
 #include "Player.hpp"
 #include <string>
 
@@ -19,18 +18,22 @@ namespace coup{
 
     unsigned int& Player::getCoins(){ return _coins;}
 
-    Player& Player::getVictim() const{ return *last_victim; }
+    Player& Player::getVictim() { return *last_victim; }
 
-    const string Player::coins() const{  return to_string(_coins); }
+    const unsigned int Player::coins() const{  return _coins; }
 
 
     void Player::income(){
+
+        if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
         
-        _coins++; 
+        _coins++;
         game.log(name, Event::income);
     }
 
     void Player::foreign_aid(){
+
+        if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
         
         _coins += 2;
         game.log(name, Event::aid);
@@ -41,6 +44,8 @@ namespace coup{
         if (this -> _coins < 7){ throw runtime_error("not enough capital");}
 
         game.log(name, Event::overthrow);
+
+        game.depose(victim.getName());
 
         last_victim = &victim;
 

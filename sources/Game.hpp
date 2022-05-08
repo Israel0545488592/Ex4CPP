@@ -11,7 +11,7 @@ namespace coup{
       can take place in the game.
     */
 
-    enum class Event{ income, tax, aid, sanction, steal, save, block, overthrow, transfer};
+    enum class Event{ income, tax, aid, sanction, steal, save, block, overthrow, kill, transfer};
 
     /*  main class to reprsant the poppular board game coup  */
 
@@ -30,6 +30,8 @@ namespace coup{
     void check() const;
 
     public:
+
+    Game();
 
     //commiting changes/moves
     void inrolle(const string&);                     // add player

@@ -12,10 +12,8 @@ namespace coup{
 
         void block(Player&);
 
-        void sunction (Player&);
-
         void tax ();
 
-        const string role() const{ return "Duke";}
+        string role() const{ return "Duke";}
     };
 }

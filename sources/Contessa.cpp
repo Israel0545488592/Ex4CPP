@@ -8,6 +8,8 @@ namespace coup{
 
     void Contessa::block (Player& perpetrator){
 
+        if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
+
         game.log(perpetrator.getName(), Event::save);
 
         game.revive(perpetrator.getVictim().getName());

@@ -18,6 +18,6 @@ namespace coup{
 
     void block (Player&);           // prevents theft
 
-    const string role() const{ return "Captain";}
+    string role() const{ return "Captain";}
     };
 }
