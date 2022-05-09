@@ -6,10 +6,6 @@ namespace coup{
 
     class Captain : public Player{
 
-    private:
-
-    Player* last_victim;
-
     public:
 
     Captain (Game&, const string&);

@@ -8,7 +8,7 @@ namespace coup{
 
     void Duke::block (Player& victim){
 
-        if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
+        if (! game.alive(victim.getName())){ throw runtime_error("someone tried to pull a move on an inactive or out of game player");}
 
         game.log(name, victim.getName(), Event::sanction);
 
@@ -21,10 +21,12 @@ namespace coup{
 
     void Duke::tax (){ 
 
-        if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
+        if (_coins >= max_revanue){ throw runtime_error("once acumilated 10 coins, a player must arange a coup");}
 
         game.log(name, "", Event::tax);
         
         _coins += 3;
+
+        game.next();
     }
 }

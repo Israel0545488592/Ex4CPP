@@ -8,9 +8,11 @@ namespace coup{
 
     void Assassin::coup(Player& victim){
 
-        if (_coins < 3){ throw runtime_error("not enough capital");}
+        if (_coins < assassination_cost){ throw runtime_error("not enough capital");}
 
-        if (_coins > 7){
+        if (! game.alive(victim.getName())){ throw runtime_error("someone tried to pull a move on an inactive or out of game player");}
+
+        if (_coins >= coup_cost){
 
             game.log(name, "", Event::overthrow);
 
@@ -18,7 +20,7 @@ namespace coup{
 
             last_victim = &victim;
 
-            _coins -= 7;
+            _coins -= coup_cost;
 
         }else{
 
@@ -28,7 +30,9 @@ namespace coup{
 
             last_victim = &victim;
 
-            _coins -= 3;
+            _coins -= assassination_cost;
         }
+
+        game.next();
     }
 }

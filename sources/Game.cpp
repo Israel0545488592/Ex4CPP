@@ -12,21 +12,17 @@ namespace coup{
     }
 
     void Game::inrolle(const string& name){ 
+
+        if (! events.empty()){ throw runtime_error("the game has already started");}
+
+        if (participants.size() == max_particpants){ throw runtime_error("the game is for 2 - 6 players and it's full");}
         
         participants.push_back(name);
         active.push_back(true);
     }
 
-    void Game::log(const string& player, const string& comitter, const Event& event){
+    void Game::next(){
 
-        events.push_back({comitter, event});   // register
-
-        if (player != participants[current_player]){ throw runtime_error(player + " played not on her/is turn");}
-
-        check();                                // ligallity
-
-
-        // turn track
         current_player++;
         current_player %= participants.size();
 
@@ -35,6 +31,20 @@ namespace coup{
             current_player++;
             current_player %= participants.size();
         }
+    }
+
+    void Game::log(const string& player, const string& comitter, const Event& event){
+
+        if (participants.size() < 2){ throw runtime_error("not enough players to play");}
+
+        //turn track
+        if (event != Event::block && event != Event::sanction && event != Event::save){
+            if (player != participants[current_player]){ throw runtime_error(player + " played not on her/is turn");}
+        }
+
+        events.push_back({comitter, event});   // register
+
+        check();                               // ligallity
     }
 
     vector <string> Game::players () const{ 
@@ -48,16 +58,29 @@ namespace coup{
             }
         }
         return ans;
-     }
+    }
+
+    bool Game::alive(const string& name) const{
+
+        for (unsigned long i = 0; i < participants.size(); i++){
+
+            if (participants[i] == name){
+                return active[i];
+            }
+        }
+        return false;
+    }    
 
     const string& Game::turn() const{
 
-        if (participants.size() == 0){ throw runtime_error("no participants");}
+        if (participants.empty()){ throw runtime_error("no participants");}
 
         return participants[current_player];
     }
 
     const string& Game::winner() const{
+
+        if (events.empty()){ throw runtime_error("the game hasn't even started yet");}
 
         bool game_over = true;
         unsigned long winner = 0;
@@ -162,7 +185,6 @@ namespace coup{
         
         default:
             break;
-        }
-        
+        }       
     }
 }

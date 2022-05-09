@@ -11,8 +11,6 @@ namespace coup{
 
         protected:
 
-            int id;
-
             unsigned int _coins;
 
             string name;
@@ -34,7 +32,7 @@ namespace coup{
             const string& getName();
             unsigned int& getCoins();
             Player& getVictim();
-            const unsigned int coins() const;          // how many coins I have
+            unsigned int coins() const;          // how many coins I have
             virtual string role() const = 0;           // what is my role
     };
 }

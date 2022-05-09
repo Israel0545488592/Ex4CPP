@@ -6,6 +6,11 @@ using namespace std;
 
 namespace coup{
 
+  #define coup_cost 7
+  #define assassination_cost 3
+  #define max_revanue 10
+  #define max_particpants 6
+
     /* 
       axulery class to map all the possiable events that
       can take place in the game.
@@ -43,6 +48,8 @@ namespace coup{
     vector <string> players() const;                              // what players are currently active  
     const string& turn() const;                                   // who's turn is this
     const string& winner() const;                                 // who won
+    void next();                                                  // next turn
+    bool alive(const string&) const;                              // is the player still active
         
     };
 }

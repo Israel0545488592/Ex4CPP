@@ -7,6 +7,8 @@ namespace coup{
 
     Player::Player(Game& game, const string& name) : game(game) , name(name){
 
+        _coins = 0;
+
         last_victim = nullptr;
 
         game.inrolle(name);
@@ -20,28 +22,36 @@ namespace coup{
 
     Player& Player::getVictim() { return *last_victim; }
 
-    const unsigned int Player::coins() const{  return _coins; }
+    unsigned int Player::coins() const{  return _coins; }
 
 
     void Player::income(){
 
-        if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
+        if (_coins >= max_revanue){ throw runtime_error("once acumilated 10 coins, a player must arange a coup");}
+
+        game.log(name, "", Event::income);
         
         _coins++;
-        game.log(name, "", Event::income);
+
+        game.next();
     }
 
     void Player::foreign_aid(){
 
-        if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
+        if (_coins >= max_revanue){ throw runtime_error("once acumilated 10 coins, a player must arange a coup");}
+
+        game.log(name, name, Event::aid);
         
         _coins += 2;
-        game.log(name, name, Event::aid);
+
+        game.next();
     }
 
     void Player::coup(Player& victim){
 
-        if (this -> _coins < 7){ throw runtime_error("not enough capital");}
+        if (this -> _coins < coup_cost){ throw runtime_error("not enough capital");}
+
+        if (! game.alive(victim.getName())){ throw runtime_error("someone tried to pull a move on an inactive or out of game player");}
 
         game.log(name, "", Event::overthrow);
 
@@ -49,6 +59,8 @@ namespace coup{
 
         last_victim = &victim;
 
-        _coins -= 7;
+        _coins -= coup_cost;
+
+        game.next();
     }
 }

@@ -8,7 +8,7 @@ namespace coup{
 
     void Contessa::block (Player& perpetrator){
 
-        if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
+        if (! game.alive(perpetrator.getName())){ throw runtime_error("someone tried to pull a move on an inactive or out of game player");}
 
         game.log(name, perpetrator.getName(), Event::save);
 
