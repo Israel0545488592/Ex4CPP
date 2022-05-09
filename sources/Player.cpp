@@ -28,7 +28,7 @@ namespace coup{
         if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
         
         _coins++;
-        game.log(name, Event::income);
+        game.log(name, "", Event::income);
     }
 
     void Player::foreign_aid(){
@@ -36,14 +36,14 @@ namespace coup{
         if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
         
         _coins += 2;
-        game.log(name, Event::aid);
+        game.log(name, name, Event::aid);
     }
 
     void Player::coup(Player& victim){
 
         if (this -> _coins < 7){ throw runtime_error("not enough capital");}
 
-        game.log(name, Event::overthrow);
+        game.log(name, "", Event::overthrow);
 
         game.depose(victim.getName());
 

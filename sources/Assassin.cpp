@@ -12,7 +12,7 @@ namespace coup{
 
         if (_coins > 7){
 
-            game.log(name, Event::kill);
+            game.log(name, "", Event::overthrow);
 
             game.depose(victim.getName());
 
@@ -22,7 +22,7 @@ namespace coup{
 
         }else{
 
-            game.log(name, Event::kill);
+            game.log(name, name, Event::kill);
 
             game.depose(victim.getName());
 

@@ -17,7 +17,7 @@ namespace coup{
 
             string name;
 
-            Game game;
+            Game& game;
 
             Player* last_victim;
 

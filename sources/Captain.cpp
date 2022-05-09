@@ -10,7 +10,7 @@ namespace coup{
 
         if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
 
-        game.log(name, Event::steal);
+        game.log(name, name, Event::steal);
 
         if (victim.getCoins() < 2){
             victim.getCoins() = 0;
@@ -26,7 +26,7 @@ namespace coup{
 
         if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
         
-        game.log(perpetrator.getName(), Event::block);
+        game.log(name, perpetrator.getName(), Event::block);
 
         if(perpetrator.getCoins() < 2){
             perpetrator.getCoins() = 0;

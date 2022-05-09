@@ -34,15 +34,15 @@ namespace coup{
     Game();
 
     //commiting changes/moves
-    void inrolle(const string&);                     // add player
-    void log(const string&, const Event&);           // inroll a move
-    void depose(const string&);                      // remove player
-    void revive(const string&);                      // save a deposed player
+    void inrolle(const string&);                                  // add player
+    void log(const string&, const string&, const Event&);          // inroll a move
+    void depose(const string&);                                   // remove player
+    void revive(const string&);                                   // save a deposed player
 
     //state of the game
-    vector <string> players() const;                 // what players are currently active  
-    const string& turn() const;                      // who's turn is this
-    const string& winner() const;                    // who won
+    vector <string> players() const;                              // what players are currently active  
+    const string& turn() const;                                   // who's turn is this
+    const string& winner() const;                                 // who won
         
     };
 }

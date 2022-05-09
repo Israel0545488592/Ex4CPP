@@ -17,9 +17,11 @@ namespace coup{
         active.push_back(true);
     }
 
-    void Game::log(const string& name , const Event& event){
+    void Game::log(const string& player, const string& comitter, const Event& event){
 
-        events.push_back({name, event});        // register
+        events.push_back({comitter, event});   // register
+
+        if (player != participants[current_player]){ throw runtime_error(player + " played not on her/is turn");}
 
         check();                                // ligallity
 
@@ -118,8 +120,6 @@ namespace coup{
 
         string suspect = last.first;
 
-        if (suspect != participants[current_player]){ throw runtime_error(suspect + "played not on her/is turn");}
-
         //all possiable moves
 
         switch (last.second){
@@ -130,7 +130,7 @@ namespace coup{
 
                 if (events[last_ind -i].second == Event::steal){
                     if (events[last_ind -i].first == suspect){
-                        break;
+                        return;
                     }
                 }
             } 
@@ -142,7 +142,7 @@ namespace coup{
 
                 if (events[last_ind -i].second == Event::aid){
                     if (events[last_ind -i].first == suspect){
-                        break;
+                        return;
                     }
                 }
             } 
@@ -154,7 +154,7 @@ namespace coup{
 
                 if (events[last_ind -i].second == Event::kill){
                     if (events[last_ind -i].first == suspect){
-                        break;
+                        return;
                     }
                 }
             } 

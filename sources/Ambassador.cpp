@@ -10,17 +10,20 @@ namespace coup{
 
         if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
 
-        game.log(name, Event::transfer);
+        game.log(name, "", Event::transfer);
 
-        payer.getCoins() -= 1;
-        beneficiary.getCoins() += 1;
+        if (payer.getCoins() > 0){
+
+            payer.getCoins() -= 1;
+            beneficiary.getCoins() += 1;
+        }
     }
 
     void Ambassador::block (Player& perpetrator){
 
         if (_coins >= 10){ throw runtime_error("one acumilated 10 coins, a player must arange a coup");}
         
-        game.log(perpetrator.getName(), Event::block);
+        game.log(name, perpetrator.getName(), Event::block);
 
         perpetrator.getCoins() -= 2;
         perpetrator.getVictim().getCoins() +=2;
